@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.mercury.beans.Stock;
 import com.mercury.dao.StockDao;
 
-@Repository
+//@Repository
 public class StockDaoImpl implements StockDao {
-
+	
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {

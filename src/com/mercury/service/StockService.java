@@ -15,20 +15,21 @@ import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
 import com.mercury.dao.StockDao;
 
-@Service
+//@Service
 public class StockService {
-
+	//@Autowired
 	private StockDao sd;
 	
-	@Transactional
+	//@Transactional
 	public List<Stock> getByName(String name){
 		return sd.findBySymbol(name);
 	}
 	
-	@Transactional
+	//@Transactional
 	public List<Stock> getAllStock(){
 		return sd.queryAll();
 	}
+	
 	private static StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
 		String name = null;
@@ -61,6 +62,7 @@ public class StockService {
 			getStockInfo(stock);
 		}
 	}*/
+	
 	//get real time stockInfo
 		public List<StockInfo> getInfo(List<Stock> stocks) {
 			List<StockInfo> sf = new ArrayList<StockInfo>();

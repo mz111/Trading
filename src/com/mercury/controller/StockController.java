@@ -14,17 +14,18 @@ import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
 import com.mercury.service.StockService;
 
-@Controller
+//@Controller
 public class StockController {
-	
+	/*@Autowired*/
 	private StockService ss;
 	
-	@Resource
+	//@Resource
 	private List<Stock> stocks;
+	//@Resource
 	private List<StockInfo> si;
 	
-	@RequestMapping(value="/market", method=RequestMethod.GET)
-	@ResponseBody
+	//@RequestMapping(value="/market", method=RequestMethod.GET)
+	//@ResponseBody
 	public List<StockInfo> marketData() {
 		stocks = ss.getAllStock();
 		si= ss.getInfo(stocks);
