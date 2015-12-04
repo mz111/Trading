@@ -1,7 +1,7 @@
 <div class="container"  ng-controller="porController" id="main">
 	<div class="row">
 		<div class="panel panel-default col-md-10">
-			<div class="panel-head">
+			<!-- div class="panel-head">
 				<div class="container">
 					<div>
 						<h4>Pick up your <span class="glyphicons glyphicons-heart-empty"></span> stock</h4>
@@ -16,14 +16,14 @@
 								<span class="glyphicon glyphicon-adding"></span> Add to My Portfolio
 							</button>
 						</div>
-						<!-- <div calss="form-group">
+						<div calss="form-group">
 							<button class="btn btn-primary" ng-click="add()">
 								<span class="glyphicon glyphicon-adding"></span> Add to My Portfolio
 							</button>
-						</div> -->
+						</div>
 					</form>
 				</div>
-			</div>
+			</div> -->
 			<div class="panel-body">
 				<table class="table">
 					<tr>
@@ -54,8 +54,8 @@
 							Transaction
 						</th>
 					</tr>
-					<tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse | filter:stock.id">
-						<td>{{stock.id}}</td>
+					<tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse | filter:stock.symbol">
+						<td>{{stock.stock.symbol}}</td>
 						<td>{{stock.name}}</td>
 						<td>{{stock.price}}</td>
 						<td>

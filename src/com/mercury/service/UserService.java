@@ -3,18 +3,19 @@ package com.mercury.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import com.mercury.beans.*;
 import com.mercury.dao.*;
 
-
+@Service
 public class UserService {
 	@Autowired
 	private UserDao ud;
-	/*@Autowired
-	private OwnInfoDao od;*/
+	@Autowired
+	private OwnInfoDao od;
 	
 	public UserDao getUd() {
 		return ud;
@@ -43,6 +44,11 @@ public class UserService {
 	public User findUserByUserName(String username){
 		return ud.findByUserName(username);
 	}
+	@Transactional
+	public List<OwnershipInfo> findOwnByUserName(String username){
+		User user = findUserByUserName(username);
+		return od.findOwnByUser(user);
+	}
 	
 	@Transactional
 	public UserInfo userLogin(String username) {
@@ -51,13 +57,7 @@ public class UserService {
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;
 	}
-	
-	/*@Transactional
-	public List<OwnershipInfo> findOwnByUserName(String username){
-		User user = findUserByUserName(username);
-		return od.findOwnByUser(user);
-	}
-	*/
+
 	@Transactional
 	public void addBalance(String username, int addMoney) {
 		com.mercury.beans.User user =ud.findByUserName(username);

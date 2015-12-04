@@ -35,11 +35,11 @@
 	</bean>
    
    
-     <bean id="stockDao" class="com.mercury.dao.impl.StockDaoImpl" lazy-init="true">
+     <!-- <bean id="stockDao" class="com.mercury.dao.impl.StockDaoImpl" lazy-init="true">
 		<property name="sessionFactory"> 
 			<ref bean="sessionFactory" />
 		</property>
-	</bean>  
+	</bean>  --> 
 	
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 

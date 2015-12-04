@@ -22,7 +22,7 @@ public class StockService {
 	@Autowired
 	private StockDao sd;
 	
-	//@Transactional
+	@Transactional
 	public Stock getByName(String name){
 		return sd.findBySymbol(name);
 	}
@@ -32,7 +32,7 @@ public class StockService {
 		return sd.queryAll();
 	}
 	
-	private static StockInfo getStockInfo(Stock stock) {
+	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
 		String name = null;
 		String pchange = null;
@@ -53,17 +53,13 @@ public class StockService {
 			e.printStackTrace();
 		}
 		StockInfo si = new StockInfo();
+		si.setStock(stock);
 		si.setPchange(pchange);
 		si.setName(name);
 		si.setPrice(price);
 		si.setChange(change);
 		return si;
 	}
-	/*public static void marketData(List<Stock> stocks) {
-		for (Stock stock:stocks) {
-			getStockInfo(stock);
-		}
-	}*/
 	
 	//get real time stockInfo
 		public List<StockInfo> getInfo(List<Stock> stocks) {

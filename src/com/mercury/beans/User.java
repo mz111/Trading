@@ -23,9 +23,9 @@ public class User implements Serializable{
 	private String authority;
 	private int enabled;
 	
-	/*private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
+	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
 	private Set<Transaction> trans = new HashSet<Transaction>();
-	*/
+	
 	@Id
 	@GeneratedValue(generator="user_id_gen")
 	@GenericGenerator(name="user_id_gen", strategy="increment")
@@ -92,7 +92,7 @@ public class User implements Serializable{
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
-	/*@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy="own.user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<OwnershipInfo> getOwns() {
 		return owns;
@@ -120,5 +120,5 @@ public class User implements Serializable{
 	}
 	public void removeTrans(Transaction tran){
 		trans.remove(tran);
-	}*/
+	}
 }

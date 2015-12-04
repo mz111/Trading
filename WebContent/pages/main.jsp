@@ -17,6 +17,11 @@
 	<script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script src="js/angular.min.js"></script>
+	<link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<script type="text/javascript">
 		$('#status').fadeOut(800);
 		
@@ -60,17 +65,7 @@
 	                  	<a href="login" data-target="mylogin">
 	                  	 	<span class="glyphicon glyphicon-log-in" ></span> Sign in
 	                  	</a>
-
-		        	<%-- <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true"> 
-		        		<a href="login"  data-target="#mylogin" ><span class="glyphicon glyphicon-log-in" ></span> Sign in</a>
-		        	</sec:authorize>
-		        	<sec:authorize access="hasRole('ROLE_USER')">
-		    			<a href="<c:url value='/j_spring_security_logout'/>"><span class="glyphicon glyphicon-log-out" ></span> Log out</a>
-		    		</sec:authorize> --%>
 		        </li>
-		    	<%-- <sec:authorize access="hasRole('ROLE_USER')">
-		    		<a href="<c:url value='/j_spring_security_logout'/>"><span class="glyphicon glyphicon-log-out" ></span> Log out</a>
-		    	</sec:authorize> --%>
 		    </ul>
 		    </sec:authorize>
 		</div>
@@ -99,48 +94,9 @@
                       </a>
                   </li> 
                  </sec:authorize>
-                 <%-- <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-                  <!-- user login dropdown start-->
-                  <li class="dropdown" navbar-right ng-controller="headerCtrl">
-                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <span class="profile-ava">
-                              <img alt="" src="img/images.jpg" width="30" height="30">
-                          </span>
-                          <span class="username">Hello, {{user.userName}}</span>
-                          <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu extended logout">
-                          <div class="log-arrow-up"></div>
-                          <li class="prof-info-container">
-                          	<div class="profile-ava prof-big"><img alt="" src="img/images.jpg" width="50" height="50"></div>
-                          	<div class="prof-info">
-                          		<ul>
-                          			<li>{{user.firstName}} {{user.lastName}}</li>
-                          			<li>{{user.email}}
-                          		</ul>                          	
-                          	</div>
-                          </li>
-                          <li>
-                          	<a href="<c:url value='/j_spring_security_logout'/>"><i class="icon_key_alt"></i>Logout</a>
-                          </li>
-                      </ul>
-                  </li>
-                  </sec:authorize> --%>
 			</ul>
 			<sec:authorize access="hasRole('ROLE_USER')">
 			<ul class="nav navbar-nav pull-right">
-				<%-- <li>
-					<div class="dropdown navbar-right">
-						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-				  		<span class="glyphicons glyphicons-user">User</span>
-				  		<span class="caret"></span></button>
-				  		<ul class="dropdown-menu">
-						    <li><a href="#">My Portfolio</a></li>
-						    <li><a href="#"></a></li>
-						    <li><a href="<c:url value='/j_spring_security_logout'/>">Sign out</a></li>
-				  		</ul>
-					</div>
-				</li> --%>
 					<li class="dropdown" ng-controller="headerCtrl">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="profile-ava">
@@ -167,14 +123,6 @@
                   </li>
 			</ul>
 			</sec:authorize>
-			
-			<!-- <ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="#cart">
-						<span class="glyphicon glyphicon-shopping-cart"></span><span id="cartCount"> 0</span>
-					</a>
-				</li>
-			</ul> -->
 		</div>
 	</nav>
 
@@ -189,21 +137,6 @@
 		</a>
 	</div> -->
 	
-	
-	
-	<div class="alert" style="display:none;" id="usernameAndPasswordReq">
-		<p>Email and password are required</p>
-	</div>
-	
-	<div class="alert" style="display:none;" id="usernameReq">
-		<p>Email is required</p>
-	</div>
-	<div class="alert" style="display:none;" id="passwordReq">
-		<p>Password is required</p>
-	</div>
-	<div class="alert" id="wrongCredentials" style="display:none;">
-		<p>The email or password supplied is incorrect</p>
-	</div>	
 	
 	<footer class="container-fluid bg-4">
 		<div class="row">
