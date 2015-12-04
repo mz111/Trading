@@ -1,5 +1,6 @@
 (function(){
 	var app = angular.module('main', ['ngRoute','ngMessages'])
+	
 	app.service("shared", function() {
 	var _stock = null;
 	var _user = null;
@@ -25,50 +26,7 @@
 		}
 		};
 	});
-	app.controller('MainController',  function($scope, $interval, $http, $rootScope, shared) {
-		$scope.user;
-		$scope.loading=false;
-		$scope.percent = Math.random()*50+"%";
-		$http.get("validTran")
-		.success(function(data) {
-			$scope.user = data;
-			shared.setUser($scope.user);
-		}).error(function(data) {
-			console.log("AJAX ERROR");
-		});	
-		
-
-		
-		$scope.stocksArray = [];
-//		$interval(function() {
-			$http.get("market")
-			.success(function(data) {
-				$scope.stocksArray = data;
-			}).error(function(data) {
-				console.log("AJAX ERROR!");
-			});
-//		}, 2000);
-		$scope.pass = function(stock) {
-			shared.setStock(stock);
-		};
-			
-		$scope.hasStock = function(stock) {
-			console.log(stock);
-			for (var i=0; i<$scope.stockInfo.length; i++){
-				if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
-					return true;
-				}
-			}
-			return false;
-		};
-		
-		$scope.predicate = 'stock.stock.symbol';
-	    $scope.reverse = true;
-	    $scope.order = function(predicate) {
-	      $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-	      $scope.predicate = predicate;
-	    };
-	 });
+	
 	
 
 	app.config(function($routeProvider, $locationProvider) {
@@ -101,21 +59,57 @@
 			    templateUrl: 'pages/portfolio.jsp',
 			    controller: 'porController',
 		  })
+		  /*.when('/j_spring_security_logout',{
+			  templateUrl:'pages/logout.jsp',
+			  controller:"signController",
+		  })*/
 		  /*.otherwise({ redirectTo: '/' });*/
 	  
 	  	$locationProvider.html5Mode(true);
 	});
+	
+	app.controller('MainController',  function($scope, $interval, $http, $rootScope, shared) {
+		$scope.user;
+		$scope.loading=false;
+		$scope.percent = Math.random()*50+"%";
+		$http.get("validTran")
+		.success(function(data) {
+			$scope.user = data;
+			shared.setUser($scope.user);
+		}).error(function(data) {
+			console.log("AJAX ERROR");
+		});	
+		
+		$scope.pass = function(stock) {
+			shared.setStock(stock);
+		};
+			
+		$scope.hasStock = function(stock) {
+			console.log(stock);
+			for (var i=0; i<$scope.stockInfo.length; i++){
+				if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
+					return true;
+				}
+			}
+			return false;
+		};
+		
+	 });
+	
 	app.controller('homeController',function($http, $routeParams){
 		$scope.params = $routeParams;
 	});
+	
 	app.controller('loginController',function($http, $routeParams){
 		$scope.params = $routeParams;
 	});
+	
 	app.controller('signController',function($http, $routeParams){
 		$scope.params = $routeParams;
 		$scope.pw1 = 'password';
 
 	});
+	
 	app.controller('stockController',function($scope, $interval, $http,$routeParams,$modal, $log, shared) {
 		// Initialization
 		$scope.stocksArray = [];
@@ -300,6 +294,26 @@
 			console.log("AJAX ERROR");
 		});
 		}, 2000);*/
+		$scope.openBuy = function () {
+			
+			$scope.item = shared.getStock();
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'buyContent.html',
+				controller: 'ModalInstanceCtrlBuy',
+				resolve: {
+					items: function () {
+						return $scope.item;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
 		
 		$scope.stocksArray = [];
 		$interval(function() {
@@ -324,27 +338,7 @@
 	      $scope.predicate = predicate;
 	    };
 	  
-	   /* $scope.openBuy = function () {
-			
-			$scope.item = shared.getStock();
-			var modalInstance = $modal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'buyContent.html',
-				controller: 'ModalInstanceCtrlBuy',
-				resolve: {
-					items: function () {
-						return $scope.item;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (selectedItem) {
-				$scope.selected = selectedItem;
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		};
-		
+	   /* 
 		$scope.openSell = function () {
 			
 			$scope.item = shared.getStock();
@@ -365,6 +359,7 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};*/
+	    
 	});
 	app.controller('transactionController',function($http){
 		$scope.message="transaction";

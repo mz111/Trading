@@ -60,7 +60,7 @@ public class UserService {
 
 	@Transactional
 	public void addBalance(String username, int addMoney) {
-		com.mercury.beans.User user =ud.findByUserName(username);
+		User user =ud.findByUserName(username);
 		int newBalance =user.getBalance() + addMoney;
 		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
 		ud.update(user);

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
+import com.mercury.service.CustomUserDetailsService;
 import com.mercury.service.RegisterService;
 import com.mercury.service.UserService;
 
@@ -32,8 +33,8 @@ public class LoginController {
 	private UserService us;
 	@Autowired
 	private RegisterService rs;
-	/*@Autowired 
-	private UserDetailsService userDetailsSvc;*/
+	@Autowired 
+	private CustomUserDetailsService cuserDetailsSvc;
 	
 	public UserService getUs() {
 		return us;
@@ -60,6 +61,13 @@ public class LoginController {
 		mav.addObject("title", "Hello, welcome to YF Trading System!");
 		return mav;
 	}
+	/*@RequestMapping(value="/j_spring_security_logout", method = RequestMethod.GET)
+	public ModelAndView LogoutPage() {	
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("logout");
+		mav.addObject("title", "Hello, welcome to YF Trading System!");
+		return mav;
+	}*/
 	
 	@RequestMapping(value="/header")
 	@ResponseBody
@@ -124,12 +132,12 @@ public class LoginController {
 			return "false";
 		}
 		
-		/*@RequestMapping(value="login_auto", method = RequestMethod.POST)
+		@RequestMapping(value="login_auto", method = RequestMethod.POST)
 		public String loginAuto(HttpServletRequest request) {
 			String username = request.getParameter("j_username");
 			String password = us.findUserByUserName(username).getPassWord();
 			try {
-				UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
+				UserDetails userDetails = cuserDetailsSvc.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 			    // redirect into secured main page if authentication successful
 			    if(auth.isAuthenticated()) {
@@ -140,5 +148,5 @@ public class LoginController {
 				e.getStackTrace();
 			}
 			return "redirect:/error";
-		}*/
+		}
 }

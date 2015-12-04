@@ -58,6 +58,7 @@
 		<div class="top headerLinks">
 			<a href="home">
 				<img width="130" height="60" src="icon/icon.jpg">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">ADMIN PAGE</sec:authorize>
 			</a>
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
 				<ul class="nav navbar-nav navbar-right col-md-2" >
@@ -149,6 +150,14 @@
 			</div>
 		</div>
 		<div class="contact-us col-md-4">
+			<span class="contact">Contact Us</span>
+			<div>
+				<p><span class="glyphicon glyphicon-map-marker"></span> Princeton, US</p>
+      			<p><span class="glyphicon glyphicon-phone"></span> Phone: +01 1234567890</p>
+      			<p><span class="glyphicon glyphicon-envelope"></span> Email: mail@mail.com</p>	
+			</div>
+		</div>
+		<div class="contact-us col-md-3">
 			<span class="contact">Contact Us</span>
 			<div>
 				<p><span class="glyphicon glyphicon-map-marker"></span> Princeton, US</p>

@@ -7,20 +7,47 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
+import com.mercury.dao.OwnInfoDao;
 import com.mercury.dao.StockDao;
 
 @Service
 public class StockService {
 	@Autowired
 	private StockDao sd;
+	@Autowired
+	private OwnInfoDao od;
+	
+	public boolean realStock(Stock stock){
+		StockInfo stockInfo = getStockInfo(stock);
+		if(stockInfo != null && stockInfo.getName() != ""){
+			return true;
+		}
+		return false;
+	}
+	
+	@Transactional
+	public void addStock(Stock stock){
+		stock.setSymbol(stock.getSymbol().toUpperCase());
+		sd.save(stock);
+	}
+	
+	@Transactional
+	public void removeStock(Stock stock){
+		sd.delete(stock);
+	}
+	
+	@Transactional
+	public Stock loadById(int id){
+		return sd.findBySid(id);
+	}
 	
 	@Transactional
 	public Stock getByName(String name){
@@ -30,6 +57,21 @@ public class StockService {
 	@Transactional
 	public List<Stock> getAllStock(){
 		return sd.queryAll();
+	}
+	
+	@Transactional
+	public List<OwnershipInfo> getAllOwn(){
+		return od.queryAll();
+	}
+	
+	@Transactional
+	public boolean hasStock(Stock stock){
+		Stock s = getByName(stock.getSymbol().toUpperCase());
+		if (s == null){
+			return false;
+		}else{
+			return true;
+		}
 	}
 	
 	public StockInfo getStockInfo(Stock stock) {

@@ -18,15 +18,15 @@
 		</div>
 		<div class="form-group1">
 			<label for="ulname"> Lastname:</label>
-	    	<input type="text" name="lastName" id="j_lastName" tabindex="1" class="form-control" placeholder="Enter username">
+	    	<input type="text" name="lastName" id="j_lastName" tabindex="1" class="form-control" placeholder="Enter lastname">
 		</div>
 		<div class="form-group1">
 			<label for="ufname"> Firstname:</label>
-	    	<input type="text" name="firstName" id="j_firstName" tabindex="1" class="form-control" placeholder="Enter username">
+	    	<input type="text" name="firstName" id="j_firstName" tabindex="1" class="form-control" placeholder="Enter firstname">
 		</div>
 		<div class="form-group1">
 			<label for="uemail"> Email:</label>
-	    	<input type="email" name="email" id="j_email" tabindex="1" class="form-control" placeholder="Enter username">
+	    	<input type="email" name="email" id="j_email" tabindex="1" class="form-control" placeholder="Enter emial address">
 		</div>
 		<div class="form-group1">
 	 		<label for="pwd">Password:</label>        
@@ -36,8 +36,10 @@
 			<label for="pwd"> Confirm your password:</label>
 	    	<input type="password" name="confirm_password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm your password">
 		</div>
-		<div class="form-group1">        
-    		<input type="submit" name="submit2" id="register" tabindex="4" class="form-control btn btn-register">Register</button>		  	
+		<div class="form-group1">
+		<div class="col-sm-6 col-sm-offset-3">       
+    		<input type="submit" name="submit2" id="register" tabindex="4" class="form-control btn btn-register" value="Register Now">		  	
+		</div> 
 		</div>
 	</form>
 	</div>
@@ -49,3 +51,4 @@
 	</div>
 	</section>
 </div>
+ <script type="text/javascript" src="js/jquery.validate.min.js"></script>

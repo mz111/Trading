@@ -85,8 +85,8 @@ public class RegisterService {
     }    
 	
 	public void sendMail(String username, String email) {
-		final String fromMail = "m.yahoof201506@gmail.com";
-		final String password = "mercury201506";
+		final String fromMail = "yftsemailsystem@gmail.com";
+		final String password = "yftspassword";
 		
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";  
         Properties prop = System.getProperties();
