@@ -7,6 +7,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,17 +17,17 @@ import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
 import com.mercury.dao.StockDao;
 
-//@Service
+@Service
 public class StockService {
-	//@Autowired
+	@Autowired
 	private StockDao sd;
 	
 	//@Transactional
-	public List<Stock> getByName(String name){
+	public Stock getByName(String name){
 		return sd.findBySymbol(name);
 	}
 	
-	//@Transactional
+	@Transactional
 	public List<Stock> getAllStock(){
 		return sd.queryAll();
 	}

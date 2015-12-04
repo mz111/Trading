@@ -9,16 +9,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
 import com.mercury.service.StockService;
 
 @Controller
+@SessionAttributes
 public class StockController {
-	/*@Autowired*/
+	//@Resource(name="StockService")
+	@Autowired
 	private StockService ss;
 	
+	public StockService getSs() {
+		return ss;
+	}
+
+	public void setSs(StockService ss) {
+		this.ss = ss;
+	}
+
 	//@Resource
 	private List<Stock> stocks;
 	//@Resource

@@ -39,10 +39,10 @@
 		    templateUrl: 'pages/home.jsp',
 		    controller: 'homeController',
 		  })
-		  /*.when('/home', {
+		  .when('/home', {
 			    templateUrl: 'pages/home.jsp',
 			    controller: 'signController',
-		  })*/
+		  })
 		  .when('/login', {
 			    templateUrl: 'pages/login.jsp',
 			    controller: 'loginController',

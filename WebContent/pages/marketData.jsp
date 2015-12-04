@@ -42,7 +42,7 @@
 				</th>
 			</tr>
 			<tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse | filter:stock.id">
-				<td>{{stock.id}}</td>
+				<td>{{stock.symbol}}</td>
 				<td>{{stock.name}}</td>
 				<td>{{stock.price}}</td>
 				<td>
