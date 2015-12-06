@@ -1,45 +1,45 @@
 (function(){
-	var app = angular.module('main', ['ngRoute','ngMessages'])
+	var app = angular.module('main', ['ngMessages'])
 	
 	app.service("shared", function() {
-	var _stock = null;
-	var _user = null;
-	var _stockInfo = null;
-	return {
-		getStock : function() {
-			return _stock;
-		},
-		setStock : function(stock) {
-			_stock = stock;
-		},
-		getUser : function() {
-			return _user;
-		},
-		setUser : function(user){
-			_user = user;
-		},
-		getStockInfo : function(){
-			return _stockInfo;
-		},
-		setStockInfo : function(stockInfo){
-			_stockInfo = stockInfo;
-		}
+		var _stock = null;
+		var _user = null;
+		var _stockInfo = null;
+		return {
+			getStock : function() {
+				return _stock;
+			},
+			setStock : function(stock) {
+				_stock = stock;
+			},
+			getUser : function() {
+				return _user;
+			},
+			setUser : function(user){
+				_user = user;
+			},
+			getStockInfo : function(){
+				return _stockInfo;
+			},
+			setStockInfo : function(stockInfo){
+				_stockInfo = stockInfo;
+			}
 		};
 	});
 	
 	
 
-	app.config(function($routeProvider, $locationProvider) {
+	/*app.config(function($routeProvider, $locationProvider) {
 	  $routeProvider
 		  .when('/', {
 		    templateUrl: 'pages/landing.jsp',
 		    controller: 'homeController',
 		  })
-		  .when('/home', {
+		  .when('/land', {
 			    templateUrl: 'pages/landing.jsp',
 			    controller: 'signController',
 		  })
-		  .when('/login', {
+		  .when('/login_form', {
 			    templateUrl: 'pages/login.jsp',
 			    controller: 'loginController',
 		  })
@@ -59,14 +59,14 @@
 			    templateUrl: 'pages/portfolio.jsp',
 			    controller: 'porController',
 		  })
-		  /*.when('/j_spring_security_logout',{
-			  templateUrl:'pages/logout.jsp',
-			  controller:"signController",
-		  })*/
-		  /*.otherwise({ redirectTo: '/' });*/
+		  .when('/confirmation',{
+			  templateUrl:'pages/confirmation.jsp',
+			  controller:"homeController",
+		  })
+		  .otherwise({ redirectTo: '/' });
 	  
 	  	$locationProvider.html5Mode(true);
-	});
+	});*/
 	
 	app.controller('MainController',  function($scope, $interval, $http, $rootScope, shared) {
 		$scope.user;
@@ -79,20 +79,6 @@
 		}).error(function(data) {
 			console.log("AJAX ERROR");
 		});	
-		
-		$scope.pass = function(stock) {
-			shared.setStock(stock);
-		};
-			
-		$scope.hasStock = function(stock) {
-			console.log(stock);
-			for (var i=0; i<$scope.stockInfo.length; i++){
-				if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
-					return true;
-				}
-			}
-			return false;
-		};
 		
 	 });
 	
@@ -110,13 +96,13 @@
 
 	});
 	
-	app.controller('stockController',function($scope, $interval, $http,$routeParams,$modal, $log, shared) {
+	app.controller('stockController',function($scope, $interval, $http,$routeParams) {
 		// Initialization
 		$scope.stocksArray = [];
 		$interval(function() {
 			$http({
 				method: "GET",
-				url: "rest/market",
+				url: "/market",
 			}).success(function(data) {
 				$scope.stocksArray = data;
 			}).error(function(data) {
@@ -128,37 +114,6 @@
 		$scope.pass = function(stock) {
 			shared.setStock(stock);
 		};
-			
-		$scope.hasStock = function(stock) {
-			console.log(stock);
-			for (var i=0; i<$scope.stockInfo.length; i++){
-				if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
-					return true;
-				}
-			}
-			return false;
-		};
-		$scope.openBuy = function () {
-			
-			$scope.item = shared.getStock();
-			var modalInstance = $modal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'buyContent.html',
-				controller: 'ModalInstanceCtrlBuy',
-				resolve: {
-					items: function () {
-						return $scope.item;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (selectedItem) {
-				$scope.selected = selectedItem;
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		};
-		
 		$scope.predicate = 'stock.stock.symbol';
 	    $scope.reverse = true;
 	    $scope.order = function(predicate) {
@@ -166,8 +121,9 @@
 	      $scope.predicate = predicate;
 	    };
 	    
+	    
 	});
-	app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, items, shared) {
+	/*app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, items, shared) {
 		$scope.user = shared.getUser();	
 		$scope.Math = window.Math;
 		$scope.buyItem = items;
@@ -267,7 +223,7 @@
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-	});
+	});*/
 	app.controller('homeController',function($http, $routeParams){
 		$scope.params = $routeParams;
 		$scope.message="mainhome";
@@ -319,7 +275,7 @@
 		$interval(function() {
 			$http({
 				method: "GET",
-				url: "rest/market",
+				url: "/market",
 			}).success(function(data) {
 				$scope.stocksArray = data;
 			}).error(function(data) {

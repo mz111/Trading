@@ -12,16 +12,16 @@
     	<sec:intercept-url pattern="/login*" access="hasRole('ROLE_USER')"/>
     	<!-- <sec:intercept-url pattern="/main*" access="isAnonymous()"/> -->
     	  <sec:form-login 
-        	login-page="/login"
-        	default-target-url="/main.html"
-        	authentication-failure-url="/login?login_error=1" 
+        	login-page="/main#login_up"
+        	
+        	authentication-failure-url="/main?login_error=1" 
         /> 
-        <sec:logout logout-success-url="/" delete-cookies="JSESSIONID"/>
+        <sec:logout logout-success-url="/main#login_up" delete-cookies="JSESSIONID"/>
 	</sec:http>
  	
 	<sec:authentication-manager alias="authenticationManager">
-		<sec:authentication-provider user-service-ref="CustomUserDetailsService"/>
-        <!--<sec:authentication-provider>
+		<!--<sec:authentication-provider user-service-ref="CustomUserDetailsService"/>-->
+        <sec:authentication-provider>
         	 <sec:jdbc-user-service id="jdbcUserService" data-source-ref="dataSource"
 		   		users-by-username-query="
 		      		select username, password, enabled 
@@ -29,7 +29,7 @@
 				authorities-by-username-query="
 		      		select username, authority from yfts_user 
 		      		where username =?" />   	
-		</sec:authentication-provider>-->
+		</sec:authentication-provider>
 	 </sec:authentication-manager>
 	<!-- <bean id="customUserDetailsService" class="com.mercury.service.CustomUserDetailsService">
     	<property name="ud" ref="userDao"/>

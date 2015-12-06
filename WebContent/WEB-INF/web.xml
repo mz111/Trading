@@ -5,7 +5,7 @@
 	xsi:schemaLocation="
 		http://java.sun.com/xml/ns/javaee 
 		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  	<display-name>YFTS</display-name>
+  	<display-name>TradingSystem</display-name>
 	<welcome-file-list>
 		<welcome-file>main.html</welcome-file>
 	</welcome-file-list>
@@ -20,8 +20,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+<!--         <url-pattern>/rest/*</url-pattern> -->
         <url-pattern>*.html</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     
     <!-- JNDI Configuration -->

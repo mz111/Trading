@@ -33,8 +33,8 @@ public class LoginController {
 	private UserService us;
 	@Autowired
 	private RegisterService rs;
-	@Autowired 
-	private CustomUserDetailsService cuserDetailsSvc;
+	/*@Autowired 
+	private CustomUserDetailsService cuserDetailsSvc;*/
 	
 	public UserService getUs() {
 		return us;
@@ -54,17 +54,10 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/main", method = RequestMethod.GET)
+	/*@RequestMapping(value="/main", method = RequestMethod.GET)
 	public ModelAndView mainPage() {	
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
-		mav.addObject("title", "Hello, welcome to YF Trading System!");
-		return mav;
-	}
-	/*@RequestMapping(value="/j_spring_security_logout", method = RequestMethod.GET)
-	public ModelAndView LogoutPage() {	
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("logout");
 		mav.addObject("title", "Hello, welcome to YF Trading System!");
 		return mav;
 	}*/
@@ -76,7 +69,7 @@ public class LoginController {
 		User user = us.findUserByUserName(username);
 		return user;
 	}
-	//for sign up
+		//for sign up
 		@RequestMapping(value="/confirmation", method=RequestMethod.POST)
 		public ModelAndView process(@ModelAttribute("user") 
 				User user, BindingResult result) {
@@ -132,7 +125,7 @@ public class LoginController {
 			return "false";
 		}
 		
-		@RequestMapping(value="login_auto", method = RequestMethod.POST)
+		/*@RequestMapping(value="login_auto", method = RequestMethod.POST)
 		public String loginAuto(HttpServletRequest request) {
 			String username = request.getParameter("j_username");
 			String password = us.findUserByUserName(username).getPassWord();
@@ -148,5 +141,5 @@ public class LoginController {
 				e.getStackTrace();
 			}
 			return "redirect:/error";
-		}
+		}*/
 }

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.dao.UserDao;
 
-@Component
+@Service
 @Transactional(readOnly=true)
 public class CustomUserDetailsService implements UserDetailsService{
 	@Autowired
