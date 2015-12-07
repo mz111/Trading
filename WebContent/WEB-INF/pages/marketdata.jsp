@@ -1,171 +1,185 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<div class="container-fluid">
-		<div class="top headerLinks">
-			<a href="#land">
-				<img width="130" height="60" src="icon/icon.jpg">
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<h2>ADMIN PAGE</h2></sec:authorize>
-			</a>
-			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
-				<ul class="nav navbar-nav navbar-right col-md-2" >
-			        <li style="float:right;">
-	                  	<a href="#login_up">
-	                  	 	<span class="glyphicon glyphicon-log-in" ></span> Sign in
-	                  	</a> 
-	                  	<!-- <span class="glyphicon glyphicon-log-in" data-toggle="modal" data-target="#login_up"></span> Sign in -->
-	                  	
-		        </li>
-		    </ul>
-		    </sec:authorize>
-		</div>
-	</div>
-	<nav class="navbar navbar-default" data-spy="affix" data-offset-top="197">		
-		<div class="container-fluid" ng-controller="MainController">
-			<ul class="nav navbar-nav">
-			    <li><a href="#land" class="nav-font">Home</a></li>
-			    <li>
-			    	<a href="#marketdata" class="nav-font">MarketData</a>
-			    </li>
-			   <!--  <li>
-			    	<a href="#transaction" class="nav-font">Transaction</a>
-			    </li> -->
-			    <sec:authorize access="hasRole('ROLE_USER')">
-                  <li>
-                      <a class="nav-font" href="#portfolio">
-                          <i class="icon_desktop"></i>
-                          <span>My Portfolio</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="nav-font" href="#history">
-                          <i class="icon_document_alt"></i>
-                          <span>History</span>
-                      </a>
-                  </li> 
-                 </sec:authorize>
-			</ul>
-			<sec:authorize access="hasRole('ROLE_USER')">
-			<ul class="nav navbar-nav pull-right">
-					<li class="dropdown" ng-controller="headerCtrl">
-                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <span class="profile-ava">
-                              <img alt="" src="icon/user.png" width="30" height="30">
-                          </span>
-                          <span class="username">Hello, {{user.userName}}</span>
-                          <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu extended logout">
-                          <div class="log-arrow-up"></div>
-                          <li class="prof-info-container">
-                          	<div class="profile-ava prof-big"><img alt="" src="icon/user.png" width="50" height="50"></div>
-                          	<div class="prof-info">
-                          		<ul>
-                          			<li>{{user.firstName}} {{user.lastName}}</li>
-                          			<li>{{user.email}}
-                          		</ul>                          	
-                          	</div>
-                          </li>
-                          <li>
-                          	<a href="<c:url value='/j_spring_security_logout'/>"><i class="icon_key_alt"></i>Logout</a>
-                          </li>
-                      </ul>
-                  </li>
-			</ul>
-			</sec:authorize>
-		</div>
-	</nav>
-	<div class="container"  ng-controller="stockController" id="main">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+<title>Real Time Market Data</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/activity.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- for header and footer -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
+<script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+<style>
+	h3 {
+		color: blue;
+	}
+	th, td {
+		text-align:center;
+	}
+	input[type="range"] {
+    display:inline;
+	padding-top:6px;
+    width: 200px;
+    height:20px;
+	}
+	input[type="range"]::-webkit-slider-thumb {
+    	background-color: #666;
+    	padding-top:10px;
+    	width: 10px;
+    	height: 20px;
+	}
+</style>
+  </head>
+
+  <body ng-app="ui.bootstrap.demo">
+  <c:import url="pageComponent/header.jsp"/>
+  <!-- container section start -->
+ 
+      <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-			<div class="panel panel-default">
-				<div>
-					<h4>Pick up your stock</h4>
-				</div>
-				<div class="panel-head">
-					<form class="form">
-						<div class="form-group col-md-6">
-							<label>Stock Symbol</label>
-							<input class="form-control" type="text" ng-model="stock.symbol">
-						</div>
-					</form>
-				</div>
-				<div class="panel-body">
-					<table class="table table-stripped">
-						<tr>
-							<th>
-								<a href="" ng-click="order('symbol')">Stock Symbol</a>
-								<span class="sortorder" ng-show="predicate === 'symbol'" ng-class="{reverse:reverse}"></span>
-							</th>
-							<th>
-								<a href="" ng-click="order('name')">Stock Name</a>
-								<span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-							</th>
-							<th>
-								<a href="" ng-click="order('price')">Price</a>
-								<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
-							</th>
-							<th>
-								<a href="" ng-click="order('change')">Change</a>
-								<span class="sortorder" ng-show="predicate === 'change'" ng-class="{reverse:reverse}"></span>
-							</th>
-							<th>
-								<a href="" ng-click="order('pchange')">Change%</a>
-								<span class="sortorder" ng-show="predicate === 'pchange'" ng-class="{reverse:reverse}"></span>					
-							</th>
-							<sec:authorize access="hasRole('ROLE_USER')">
-								<th style="color:#007aff">Transaction</th>
-							 </sec:authorize> 
-						</tr>
-						<tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse | filter:stock.symbol">
-							<td>{{stock.stock.symbol}}</td>
-							<td>{{stock.name}}</td>
-							<td>{{stock.price}}</td>
-							<td>
-								<b ng-if="stock.change>0" style="color:green">{{stock.change}}</b>
-								<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
-								<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
-							</td>
-							<td>
-								<b ng-if="stock.pchange.indexOf('-')>-1" style="color:red">{{stock.pchange}}</b>
-								<b ng-if="stock.pchange.indexOf('+')>-1" style="color:green">{{stock.pchange}}</b>
-								<b ng-if="stock.pchange.indexOf('0')==0" style="color:black">{{stock.pchange}}</b>
-							</td>
-							 <sec:authorize access="hasRole('ROLE_USER')">
-			                	<td>
-			                  		<div class="btn-group">
-			                      		<a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a>
-			                      		<a ng-if="hasStock(stock)" class="btn btn-success" href="#" ng-click="pass(stock); openSell()" >Sell</a>
-			                  		</div>
-			                  </td>
-			               </sec:authorize> 
-						</tr>
-					</table>
-					 <!-- loading bar -->
-									<!-- <div class = "loadbox" ng-hide="loading">
-										<div class = "loadbar">
-											<div class="progress progress-striped active progress-sm" >
-										    	<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}">
-										        	<span class="sr-only">45% Complete</span>
-										        </div>
-								    		</div>
-								     		<p>Loading...</p>
-								    	</div>
-								   </div> -->
+		  <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-globe"></i>Real-Time Market Data</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+						<li><i class="fa fa-globe"></i>MarketData</li>
+					</ol>
 				</div>
 			</div>
-		</section>
-	</section>
-</div>
-<script src="js/app.js"></script>
-	<script type="text/ng-template" id="buyContent.html">
+              <!-- page start-->
+
+              <div class="row">
+                  <div class="col-lg-12" ng-controller="ModalDemoCtrl">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Market Data
+                          </header>
+                           <div class="panel-body">
+                          <div ng-controller="mainController">
+                          <form class="form">
+									<div class="form-group col-md-6">
+										<label>Stock Symbol</label>
+										<input class="form-control" type="text" ng-model="stock.symbol">
+									</div>
+									<!-- <div calss="form-group col-md-6">
+										<button class="btn btn-primary" ng-click="search()">
+											<span class="glyphicon glyphicon-search"></span> Search
+										</button>
+									</div> -->
+								</form>
+                          <table class="table table-striped table-advance table-hover" id="stockList">
+                           <tbody>
+                              <tr>
+                                 <th>
+                                 	<a href="" ng-click="order('stock.symbol')">StockSymbol</a>
+       								<span class="sortorder" ng-show="predicate === 'stock.symbol'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                
+                                 <th>
+                                 	<a href="" ng-click="order('stockName')">StockName</a>
+       								<span class="sortorder" ng-show="predicate === 'stockName'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                 <th>
+                                 	<a href="" ng-click="order('price')">Price</a>
+       								<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                 <th>
+                                 	<a href="" ng-click="order('change')">Change</a>
+       								<span class="sortorder" ng-show="predicate === 'change'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                  <th>
+                                 	<a href="" ng-click="order('pchange')">Change%</a>
+       								<span class="sortorder" ng-show="predicate === 'pchange'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+								 <sec:authorize access="hasRole('ROLE_USER')">
+									<th style="color:#007aff">Transaction</th>
+								 </sec:authorize>
+                              </tr>
+                              <tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse">
+								<td>{{stock.stock.symbol}}</td>
+								<td>{{stock.stockName}}</td>
+								<td>{{stock.price}}</td>
+								<td>
+									<b ng-if="stock.change>0" style="color:green">+{{stock.change}}</b>
+									<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
+									<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
+								</td>
+								<td>
+									<b ng-if="stock.pchange.indexOf('-')>-1" style="color:red">{{stock.pchange}}</b>
+									<b ng-if="stock.pchange.indexOf('+')>-1" style="color:green">{{stock.pchange}}</b>
+									<b ng-if="stock.pchange.indexOf('0')==0" style="color:black">{{stock.pchange}}</b>
+								</td>
+								<sec:authorize access="hasRole('ROLE_USER')">
+                                 <td>
+                                  <div class="btn-group">
+                                      <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a>
+                                      <a ng-if="hasStock(stock)" class="btn btn-success" href="#" ng-click="pass(stock); openSell()" >Sell</a>
+                                  </div>
+                                  </td>
+                                 </sec:authorize>
+                              </tr>
+
+                           </tbody>
+                        </table>
+                        <!-- loading bar -->
+						<!-- <div class = "loadbox" ng-hide="loading">
+							<div class = "loadbar">
+								<div class="progress progress-striped active progress-sm" >
+							    	<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}">
+							        	<span class="sr-only">45% Complete</span>
+							        </div>
+					    		</div>
+					     		<p>Loading...</p>
+					    	</div>
+					   </div> -->
+					   </div>
+					   </div>
+                      </section>
+                  </div>
+              </div>
+              <!-- page end-->
+
+<div  ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="buyContent.html">
         <div class="modal-header">
             <h3 class="modal-title">Buy stocks: {{buyItem.stockName}}</h3>
         </div>
@@ -192,8 +206,50 @@
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
+    <script type="text/ng-template" id="sellContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Sell stocks: {{sellItem.stockName}} 
+				(Currently own {{getAmount(sellItem)}})</h3>
+        </div>
+        <div class="modal-body">
+            <label>Stock Symbol: </label>
+			<b style="color:red">{{sellItem.stock.symbol}}</b><br/>
+			<label>Stock Name: </label>
+			<b style="color:red">{{sellItem.stockName}}</b><br/>
+			<label>Unit Price: </label>
+			<b style="color:red">{{sellItem.price}}</b><br/>
+			<label>Quantity: </label>
+			<input type="number" min="1" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<input type="range" min="1" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<br/>	
+        </div>				
+        <div class="modal-footer">
+		<div>		
+			<label style="margin-right:50px">Ready to sell <span style="color:red">{{quan}}</span>
+			shares of <span style="color:red">{{sellItem.stock.symbol}}</span>? 
+			Balance after transaction: <span style="color:red">$
+			{{Math.round(user.balance + sellItem.price * quan)}}</span></label>
+		</div><br/>
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>             
+              
+          </section>
+      </section>
+      <!--main content end-->
+  </section>
+  <!-- container section end -->
+    <!-- javascripts -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <!-- nice scroll -->
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>    
+    <!--custome script for all page-->
+    <script src="js/scripts.js"></script>
 
 
-
-</body>
+  </body>
 </html>

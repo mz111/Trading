@@ -2,21 +2,16 @@ package com.mercury.dao.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
 
 import com.mercury.beans.Stock;
 import com.mercury.beans.Transaction;
 import com.mercury.beans.User;
 import com.mercury.dao.TransDao;
 
-@Repository
 public class TransDaoImpl implements TransDao {
-	@Resource
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {

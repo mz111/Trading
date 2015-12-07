@@ -2,19 +2,13 @@ package com.mercury.dao.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
-
 import com.mercury.beans.User;
 import com.mercury.dao.UserDao;
 
-@Repository
 public class UserDaoImpl implements UserDao {
-	@Resource
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {
@@ -79,4 +73,5 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		return (User) sessionFactory.getCurrentSession().get(User.class, user);
 	}
+
 }

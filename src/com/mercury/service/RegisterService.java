@@ -120,7 +120,7 @@ public class RegisterService {
             BodyPart messageBodyPart = new MimeBodyPart();
             //now set the actual message
             //messageBodyPart.setText("Dear " + username +",\n\nWelcome to Yahoo Finance!");
-            String link = "http://localhost:8080/YFTS/activateAccount.html?username=" + username + "&" + "checkcode" + "=" + md5(username);  
+            String link = "http://localhost:8080/TradingSystem/activateAccount.html?username=" + username + "&" + "checkcode" + "=" + md5(username);  
             messageBodyPart.setContent("Dear " + username + "<br><br>Welcome to Yahoo Finance!<br>" + 
             		"<a href='" + link +"'>Please click this link to activate your account</a>","text/html;charset=utf-8");  
             // Create a multipart message

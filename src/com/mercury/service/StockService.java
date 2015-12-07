@@ -1,12 +1,11 @@
 package com.mercury.service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +23,23 @@ public class StockService {
 	private StockDao sd;
 	@Autowired
 	private OwnInfoDao od;
+
+	public StockDao getSd() {
+		return sd;
+	}
+	public void setSd(StockDao sd){
+		this.sd = sd;
+	}	
+	public OwnInfoDao getOd() {
+		return od;
+	}
+	public void setOd(OwnInfoDao od) {
+		this.od = od;
+	}
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
-		if(stockInfo != null && stockInfo.getName() != ""){
+		if(stockInfo != null && stockInfo.getStockName() != ""){
 			return true;
 		}
 		return false;
@@ -50,7 +62,7 @@ public class StockService {
 	}
 	
 	@Transactional
-	public Stock getByName(String name){
+	public List<Stock> getByName(String name){
 		return sd.findBySymbol(name);
 	}
 	
@@ -66,8 +78,8 @@ public class StockService {
 	
 	@Transactional
 	public boolean hasStock(Stock stock){
-		Stock s = getByName(stock.getSymbol().toUpperCase());
-		if (s == null){
+		List<Stock> s = getByName(stock.getSymbol().toUpperCase());
+		if (s == null || s.size() == 0){
 			return false;
 		}else{
 			return true;
@@ -76,8 +88,8 @@ public class StockService {
 	
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
-		String name = null;
 		String pchange = null;
+		String name = null;
 		double price = 0;
 		double change = 0;
 		try {
@@ -85,32 +97,32 @@ public class StockService {
 			URLConnection urlconn = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
 			String content = in.readLine();
-			content = content.replace((char)34, (char)32);
-			String[] tokens = content.split(",");
+			System.out.println(content);
+			content = content.replace((char)34, (char)32);//' ' replace '"'
+			String[] tokens = content.split(",");			
 			pchange = tokens[tokens.length-1].trim();
 			price = Double.parseDouble(tokens[tokens.length-2].trim());
 			change = Double.parseDouble(tokens[tokens.length-3].trim());
-			name = tokens[tokens.length-4].trim();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		StockInfo si = new StockInfo();
-		si.setStock(stock);
-		si.setPchange(pchange);
-		si.setName(name);
-		si.setPrice(price);
-		si.setChange(change);
-		return si;
+			name =  tokens[tokens.length-4].trim();
+		}catch (Exception e) {
+				e.printStackTrace();
+			}
+			StockInfo si = new StockInfo();
+			si.setStock(stock);
+			si.setStockName(name);
+			si.setPchange(pchange);
+			si.setPrice(price);
+			si.setChange(change);
+			return si;	
 	}
 	
 	//get real time stockInfo
-		public List<StockInfo> getInfo(List<Stock> stocks) {
-			List<StockInfo> sf = new ArrayList<StockInfo>();
-			for (Stock s : stocks) {
-				StockInfo info = getStockInfo(s);
-				if (info != null && info.getName() != "") 
-					sf.add(info);
-			}
-			return sf;
+	public List<StockInfo> getInfo(List<Stock> stocks) {
+		List<StockInfo> sf = new ArrayList<StockInfo>();
+		for (Stock s : stocks) {
+			StockInfo info = getStockInfo(s);
+			if (info != null && info.getStockName() != "") sf.add(info);
 		}
+		return sf;
+	}
 }

@@ -95,7 +95,7 @@ public class Transaction {
 	
 	@Override
 	public String toString(){
-		return Integer.toString(getUser().getUid())+ ","+ (getStock().getSid()).toString()
+		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
 				+","+Integer.toString(amount)+","+price.toString()+","
 				+ts.toString();
 	}

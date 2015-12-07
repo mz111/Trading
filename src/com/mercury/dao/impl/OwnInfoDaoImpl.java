@@ -2,12 +2,9 @@ package com.mercury.dao.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
 
 import com.mercury.beans.Ownership;
 import com.mercury.beans.OwnershipInfo;
@@ -15,9 +12,7 @@ import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.dao.OwnInfoDao;
 
-@Repository
 public class OwnInfoDaoImpl implements OwnInfoDao {
-	@Resource
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {
